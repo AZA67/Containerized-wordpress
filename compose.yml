@@ -1,0 +1,24 @@
+services:
+  wordpress:
+    image: wordpress
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    #starts mysql container before wordpress
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: "abc123"
+      WORDPRESS_DB_NAME: wordpress
+    #databse environment variables to configure wordpress
+  mysql:
+    image: "mysql:latest"
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_ROOT_PASSWORD: "abc123"
+    #defines mysql variables
+    volumes:
+      - ./mysql:/var/lib/mysql
+    #maps db data to a folder on host to prevent data loss
+
